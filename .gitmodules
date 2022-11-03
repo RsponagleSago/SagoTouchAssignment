@@ -1,3 +1,6 @@
 [submodule "Assets/Framework/SagoTouch"]
 	path = Assets/Framework/SagoTouch
 	url = git@github.com:SagoSago/sago-touch.git
+[submodule "Assets/Framework/SagoCore"]
+	path = Assets/Framework/SagoCore
+	url = git@github.com:SagoSago/sago-core.git
