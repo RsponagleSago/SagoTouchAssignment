@@ -1,0 +1,3 @@
+[submodule "sago-touch"]
+	path = sago-touch
+	url = git@github.com:SagoSago/sago-touch.git
