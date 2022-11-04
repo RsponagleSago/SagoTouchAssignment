@@ -5,8 +5,7 @@ namespace ExampleSagoTouch {
     using Touch = SagoTouch.Touch;
     using UnityEngine;
 
-    public class ExampleMultiTouchObserver : MonoBehaviour, ISingleTouchObserver
-    {
+    public class ExampleMultiTouchObserver : MonoBehaviour, ISingleTouchObserver {
 
         #region Fields
 
@@ -17,10 +16,19 @@ namespace ExampleSagoTouch {
         private Renderer m_Renderer;
 
         [System.NonSerialized]
-        private List<Touch> m_Touches;
+        private List<Touch> m_Touches = new List<Touch>();
 
         [System.NonSerialized]
         private Transform m_Transform;
+
+        [SerializeField]
+        private Vector3 m_CollectiveCenter;
+
+        [SerializeField]
+        private Vector2 m_Velocity;
+
+        [SerializeField]
+        private float m_MaximumVelocity = 1.0f;
 
         #endregion
 
@@ -78,24 +86,28 @@ namespace ExampleSagoTouch {
 
         public bool OnTouchBegan(Touch touch) {
             if (HitTest(touch)) {
-                this.m_Touches.Add(touch);
+                this.Touches.Add(touch);
                 return true;
             }
             return false;
         }
 
         public void OnTouchCancelled(Touch touch) {
-            Debug.Log("Example Observer - " + gameObject.name + " - Touch Cancelled");
             OnTouchEnded(touch);
         }
 
         public void OnTouchEnded(Touch touch) {
-            Debug.Log("Example Observer - " + gameObject.name + " - Touch Ended: " + touch.Position);
             this.Touches.Remove(touch);
         }
 
         public void OnTouchMoved(Touch touch) {
-            Debug.Log("Example Observer - " + gameObject.name + " - Touch Moved: " + touch.Position);
+            m_CollectiveCenter = Vector3.zero;
+            for (int i = 0; i < this.Touches.Count; i++) {
+                m_CollectiveCenter += CameraUtils.TouchToWorldPoint(Touches[i], this.Transform, this.Camera);
+            }
+            m_CollectiveCenter /= this.Touches.Count;
+
+            transform.position = Vector2.SmoothDamp(transform.position, m_CollectiveCenter, ref m_Velocity, m_MaximumVelocity * Time.fixedDeltaTime);
         }
 
         #endregion

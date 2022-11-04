@@ -4,8 +4,7 @@ namespace ExampleSagoTouch {
     using UnityEngine;
     using Touch = SagoTouch.Touch;
 
-    public class ExampleSingleTouchObserver : MonoBehaviour, ISingleTouchObserver
-    {
+    public class ExampleSingleTouchObserver : MonoBehaviour, ISingleTouchObserver {
 
         #region Fields
 
@@ -21,23 +20,26 @@ namespace ExampleSagoTouch {
         [System.NonSerialized]
         private Transform m_Transform;
 
+        [SerializeField]
+        private Vector2 m_Velocity;
+
+        [SerializeField]
+        private float m_MaximumVelocity = 1.0f;
+
         #endregion
 
 
         #region Properties
 
-        public Camera Camera
-        {
+        public Camera Camera {
             get { return m_Camera = m_Camera ?? CameraUtils.FindRootCamera(this.Transform); }
         }
 
-        public Renderer Renderer
-        {
+        public Renderer Renderer {
             get { return m_Renderer = m_Renderer ?? GetComponent<Renderer>(); }
         }
 
-        public Transform Transform
-        {
+        public Transform Transform {
             get { return m_Transform = m_Transform ?? GetComponent<Transform>(); }
         }
 
@@ -46,15 +48,13 @@ namespace ExampleSagoTouch {
 
         #region MonoBehaviour Methods
 
-        private void OnEnable()
-        {
+        private void OnEnable() {
             if (TouchDispatcher.Instance) {
                 TouchDispatcher.Instance.Add(this, 0, true);
             }
         }
 
-        private void OnDisable()
-        {
+        private void OnDisable() {
             if (TouchDispatcher.Instance) {
                 TouchDispatcher.Instance.Remove(this);
             }
@@ -65,8 +65,7 @@ namespace ExampleSagoTouch {
 
         #region Methods
 
-        private bool HitTest(Touch touch)
-        {
+        private bool HitTest(Touch touch) {
             var bounds = this.Renderer.bounds;
             bounds.extents += Vector3.forward;
             return bounds.Contains(CameraUtils.TouchToWorldPoint(touch, this.Transform, this.Camera));
@@ -86,17 +85,16 @@ namespace ExampleSagoTouch {
         }
 
         public void OnTouchCancelled(Touch touch) {
-            Debug.Log("Example Observer - " + gameObject.name + " - Touch Cancelled");
             OnTouchEnded(touch);
         }
 
         public void OnTouchEnded(Touch touch) {
-            Debug.Log("Example Observer - " + gameObject.name + " - Touch Ended: " + touch.Position);
             m_Touch = null;
+            m_Velocity = Vector2.zero;
         }
 
         public void OnTouchMoved(Touch touch) {
-            Debug.Log("Example Observer - " + gameObject.name + " - Touch Moved: " + touch.Position);
+            transform.position = Vector2.SmoothDamp(transform.position, CameraUtils.TouchToWorldPoint(touch, this.Transform, this.Camera), ref m_Velocity, m_MaximumVelocity * Time.fixedDeltaTime);
         }
 
         #endregion
