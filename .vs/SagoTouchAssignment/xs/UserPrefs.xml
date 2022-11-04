@@ -1,0 +1,32 @@
+﻿<Properties StartupConfiguration="{0198E0CC-0CD9-C1F7-CA65-BC0FE864D39C}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ExampleToggleTouch.cs">
+    <Files>
+      <File FileName="Assets/Scripts/ExampleToggleTouch.cs" Line="37" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SagoTouchAssignment" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Framework" expanded="True">
+                <Node name="SagoTouch" expanded="True">
+                  <Node name="Scripts" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Scripts" expanded="True">
+                <Node name="ExampleToggleTouch.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="36acbc61-2c27-4c3b-8ad8-f5a3b05c5c0d" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
